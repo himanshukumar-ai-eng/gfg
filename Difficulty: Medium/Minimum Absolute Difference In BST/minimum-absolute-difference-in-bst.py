@@ -1,21 +1,21 @@
 class Solution:
-    def inorder(self, inord, root):
-        if root is None:
+    def inorder(self, curr,prev,ans):
+        if curr is None:
             return
-
-        self.inorder(inord, root.left)
-        inord.append(root.data)
-        self.inorder(inord, root.right)
+        self.inorder(curr.left,prev,ans)
+        if prev[0] is not None:
+            ans[0] = min(ans[0], curr.data - prev[0].data)
+        prev[0] = curr
+        
+        self.inorder(curr.right, prev, ans)
+       
 
     def absolute_diff(self, root):
-        inord = []
+        prev = [None]
+        ans = [float('inf')]
 
-        self.inorder(inord, root)
+    # inorder traversal (gives sorted order)
+        self.inorder(root, prev, ans)
 
-        mini = float('inf')
-        n = len(inord)
-
-        for i in range(n - 1):
-            mini = min(mini, inord[i + 1] - inord[i])
-
-        return mini
+        return ans[0]
+        
