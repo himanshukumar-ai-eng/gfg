@@ -1,12 +1,14 @@
 class Solution:
     def minDiff(self, root: 'Node', k: int) -> int:
-        if root is None:
-            return float('inf')
+        res = float('inf')
+        current = root
 
-        diff = abs(root.data - k)
+        while current is not None:
+            res = min(res, abs(current.data - k))
 
-        return min(
-            diff,
-            self.minDiff(root.left, k),
-            self.minDiff(root.right, k)
-        )
+            if current.data > k:
+                current = current.left
+            else:
+                current = current.right
+
+        return res
